@@ -1,0 +1,51 @@
+public class Solution {
+    
+    public class Interval {
+        public int start;
+        public int end;
+        public Interval() {
+            start =0; end = 0;
+        }
+        public Interval(int _start, int _end) {
+            start = _start;
+            end = _end;
+        }
+    }
+    
+    public int[][] Merge(int[][] intervals) {
+        List<int[]> result = new List<int[]>();
+        List<Interval> inter = new List<Interval>();
+        int minNum, maxNum;
+        //if intervals has only 1 element, return
+        if (intervals.Length <= 1) return intervals;
+        
+        //sort intervals base on the smaller number in each interval
+        foreach (int[] i in intervals) {
+            inter.Add(new Interval(i[0],i[1]));
+        }
+        
+        inter.Sort((x,y)=>x.start.CompareTo(y.start));
+        
+        //init min max
+        minNum = inter[0].start;
+        maxNum = inter[0].end;
+        
+        //group intervals
+        for (int k = 1; k<inter.Count; k++) {
+            //smaller number is smaller than or equal current max => check larger number and update max if any
+            if(inter[k].start <= maxNum) {
+                if(inter[k].end > maxNum) maxNum = inter[k].end;
+            }
+            //smaller number is larger than current max => store the current [min,max] intervals and update min, max
+            else {
+                result.Add(new int[] {minNum,maxNum});
+                minNum = inter[k].start;
+                maxNum = inter[k].end;
+            }
+        }
+        
+        //add the last interval and return
+        result.Add(new int[] {minNum,maxNum});
+        return result.ToArray();
+    }
+}
