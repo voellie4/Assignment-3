@@ -1,0 +1,36 @@
+public class Solution {
+    public class Interval {
+        public int start;
+        public int end;
+        public Interval() {
+            start =0; end = 0;
+        }
+        public Interval(int _start, int _end) {
+            start = _start;
+            end = _end;
+        }
+    }
+    
+    public int FindMinArrowShots(int[][] points) {
+        //return 1 and 0 if length of points is 1 and 0
+        if (points.Length == 1) return 1;
+        if (points.Length == 0) return 0;
+        //sort points based on Xend
+        List<Interval> intervals = new List<Interval>();
+        foreach (int[] i in points) {
+            intervals.Add(new Interval(i[0],i[1]));
+        }
+        intervals.Sort((x,y)=>x.end.CompareTo(y.end));
+        //init count with 1, set right limit. if Xstart of next point > right limit, update right limit
+        // + 1 arrow
+        int rightLimit = intervals[0].end;
+        int count = 1;
+        for (var i=1; i<intervals.Count;i++) {
+            if (intervals[i].start > rightLimit) {
+                count++;
+                rightLimit = intervals[i].end;
+            }
+        }
+        return count;
+    }
+}
