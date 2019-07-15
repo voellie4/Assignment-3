@@ -1,0 +1,26 @@
+public class Solution {
+    public IList<int> FindAnagrams(string s, string p) {
+        var sdict = new int[26];
+        var pdict = new int[26];
+        var res = new List<int>();
+        int slen = s.Length;
+        int plen = p.Length;
+        //not allow slen < plen
+        if (slen<plen) return res;
+        //checking substring from start of s size p: add each count of each char in s substring to array
+        //same to p to another array then compare 2 arrays, add index 0 if equal
+        for (int i=0; i<plen; i++) {
+            sdict[(int)s[i]-'a']++;
+            pdict[(int)p[i]-'a']++;    
+        }
+        if (sdict.SequenceEqual(pdict)) res.Add(0);
+        //sliding window: from plen to slen exclude index slen, count of char at index-plen -- while count of char 
+        //at index ++ then compare 2 arrays again, add index+1-plen if equal
+        for(int j=plen; j<slen; j++) {
+            sdict[(int)s[j-plen]-'a']--;
+            sdict[(int)s[j]-'a']++;
+            if (sdict.SequenceEqual(pdict)) res.Add(j+1-plen);
+        }
+        return res;
+    }
+}
