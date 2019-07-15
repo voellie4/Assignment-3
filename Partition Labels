@@ -1,0 +1,22 @@
+public class Solution {
+    public IList<int> PartitionLabels(string S) {
+        //define array lastIndex to store index of last occurence of letter in S
+        var lastIndex = new int[26];
+        for (int i = 0; i < S.Length; i++) {
+            lastIndex[(int)S[i]-(int)'a'] = i;
+        }
+        //define start, end. for each letter in S, set end of partition. if current index is end, we have a partition
+        //add its size to list and update start to the next index after end. return result.
+        int start = 0;
+        int end = 0;
+        var result = new List<int>();
+        for (int curr = 0; curr<S.Length; curr++) {
+            end = Math.Max(end,lastIndex[(int)S[curr]-(int)'a']);
+            if(curr == end) {
+                result.Add(end-start+1);
+                start = end+1;
+            }
+        }
+        return result;
+    }
+}
