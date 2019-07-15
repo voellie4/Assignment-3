@@ -1,0 +1,20 @@
+public class Solution {
+    public int FindContentChildren(int[] g, int[] s) {
+        int count = 0;
+        int i=0; 
+        int j=0;
+        //sort g and s
+        Array.Sort(g);
+        Array.Sort(s);
+        while (i<g.Length && j<s.Length) {
+            //current size >= current greed, update count, slide to next greed 
+            if(s[j]>=g[i]) {
+                count++;
+                i++;
+            }
+            //if condition not met, stay at current greed. slide to next size
+            j++;
+        }
+        return count;
+    }
+}
