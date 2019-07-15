@@ -1,0 +1,27 @@
+public class Solution {
+    public bool LemonadeChange(int[] bills) {
+        if (bills.Length == 0) return false;
+        var billCounts = new int[11];
+        foreach (int bill in bills) {
+            if (bill == 5) {
+                billCounts[5]++; 
+            }
+            else if (bill == 10) {
+                if (billCounts[5] == 0) return false;
+                billCounts[5]--;
+                billCounts[10]++;
+            }
+            else {
+                if (billCounts[5] == 0 || billCounts[5]<3 && billCounts[10]==0) return false;
+                else if (billCounts[5]>0 && billCounts[10]>0) {
+                    billCounts[5]--;
+                    billCounts[10]--;
+                }
+                else {
+                    billCounts[5] = billCounts[5]-3;
+                }
+            }
+        }
+        return true;
+    }
+}
