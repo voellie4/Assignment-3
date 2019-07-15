@@ -1,0 +1,12 @@
+public class Solution {
+    public int PeakIndexInMountainArray(int[] A) {
+        return BinarySearch(A,0,A.Length-1);
+    }
+    
+    public int BinarySearch(int[] A,int left, int right) {
+        int mid = left+(right-left)/2;
+        if (A[mid-1]<A[mid] && A[mid+1]<A[mid]) return mid;
+        else if (A[mid-1] > A[mid]) return BinarySearch(A,left,mid-1);
+        else return BinarySearch(A,mid+1,right);
+    }
+}
