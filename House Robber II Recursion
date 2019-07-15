@@ -1,0 +1,18 @@
+public class Solution {
+    public int Rob(int[] nums) {
+        if (nums.Length==1) return nums[0];
+        int[] memo1 = new int[nums.Length+1];
+        int[] memo2 = new int[nums.Length+1];
+        Array.Fill(memo1,-1);
+        Array.Fill(memo2,-1);
+        return Math.Max(Helper(nums,0,memo1,nums.Length-1),Helper(nums,1,memo2,nums.Length));
+    }
+    public int Helper (int[] nums, int current, int[] memo, int end) {
+        if (current==end-1) return nums[current];
+        if (current>end-1) return 0;
+        if (memo[current]==-1) {
+            memo[current] = Math.Max(nums[current]+Helper(nums,current+2,memo,end),Helper(nums,current+1,memo,end));
+        }
+        return memo[current];
+    }
+}
