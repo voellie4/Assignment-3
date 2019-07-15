@@ -1,0 +1,24 @@
+public class Solution {
+    public int Rob(int[] nums) {
+        if (nums.Length == 0) return 0;
+        if (nums.Length == 1) return nums[0];
+        if (nums.Length == 2) return Math.Max(nums[0],nums[1]);
+        return Math.Max(Profit(nums,0,nums.Length-1), Profit(nums,1,nums.Length));
+    }
+    
+    public int Profit (int[] nums, int first, int last) {
+        int max = Int32.MinValue;
+        int sum = 0;
+        int[] money = new int[nums.Length];
+        
+        for (int i = first; i<last; i++) {
+            if(i-2>=0) 
+                sum = money[i-2] + nums[i];
+            else 
+                sum = nums[i];
+            max = Math.Max(max,sum);
+            money[i] = max;
+        }
+        return max;
+    }
+}
